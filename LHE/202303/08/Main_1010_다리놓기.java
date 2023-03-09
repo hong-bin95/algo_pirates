@@ -1,7 +1,7 @@
 import java.io.*;
 import java.util.*;
 
-public class Main_1010 {
+public class Main_1010_다리놓기 {
 
     static int N;
     static int M;
