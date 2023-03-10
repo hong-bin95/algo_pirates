@@ -1,0 +1,413 @@
+## 10972 다음 순열
+
+[10972번: 다음 순열](https://www.acmicpc.net/problem/10972)
+
+**문제**
+
+수열의 길이와 하나의 수열이 주어지고, 사전 식으로 정렬했을 때, 주어진 수열 다음 수열이 무엇인지 출력
+
+**풀이**
+
+1. 순열을 돌리다가 주어진 수열과 같은 수열 발견하면 flag를 true로 바꿔줌
+2. flag가 true 이면 현재 순열을 sb에 저장
+3. sb에 내용 있으면 sb 출력 없으면 -1 출력
+
+**코드**
+
+```java
+package algo_0308;
+
+import java.util.*;
+import java.io.*;
+
+public class Main_10972_이정현 {
+    static int N;
+    static int[] last;
+    static boolean[] v;
+    static int[] tmp;
+    static boolean flag;
+    static StringBuilder sb = new StringBuilder();
+    public static void main(String[] args) throws Exception {
+        BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
+
+        N= Integer.parseInt(in.readLine());
+
+        StringTokenizer st= new StringTokenizer(in.readLine());
+        last = new int[N];
+        v= new boolean[N];
+        tmp= new int[N];
+        for(int i=0;i<N;i++){
+            last[i]=Integer.parseInt(st.nextToken());
+        }
+
+        perm(0);
+        if(sb.length()==0){
+            sb.append(-1);
+        }
+        System.out.println(sb);
+    }
+
+    static void perm(int depth){
+        if(depth==N){
+
+            //이전에 구했던 수열이 구해야하는 수열의 앞 수열이면(이전 수열이 맞으면) flag true
+            if(flag){
+                for(int i=0;i<N;i++){
+                    sb.append(tmp[i]+" ");
+                }
+                flag=false;
+            }
+
+            //구해야 하는 수열의 이전 수열 last와 현재 뽑은 수열이 같으면
+            for(int i=0;i<N;i++){
+//                if(tmp[i]==last[i]){
+//                    flag=true;
+//                }
+                if(Arrays.equals(tmp,last)){
+                    flag=true;
+                }
+            }
+            return;
+        }
+
+        for(int i=1;i<=N;i++){
+            if(!v[i-1]){
+                v[i-1]=true;
+                tmp[depth]=i;
+                perm(depth+1);
+                v[i-1]=false;
+            }
+        }
+    }
+}
+```
+
+**결과** 
+
+시간초과
+
+**해결**
+
+단순 재귀사용 순열 공식 사용하면 안되고 규칙을 찾거나nextPermutation사용해야 해결할 수 있다.
+
+생각해보니까 순열은 N!인데 N이 10을 넘어가면 시간복잡도가 빵빵 터진다고 배웠던 기억이..
+
+next Permutation은 다음과 같은 원리를 가지고 있다.
+
+① A[i-1] < A[i] 을 만족하는 가장 큰 i를 찾는다.
+
+② i보다 크거나 같으면서, A[j] > A[i-1] 을 만족하는 인덱스 번호가 가장 큰 j 를 찾는 것이다.
+
+③ A[i-1] 과 A[j]를 swap 한다. 
+
+④ A[i]부터 순열을 뒤집는다. (오름차순 정렬) 
+
+[순열 (Permutation) 알고리즘의 모든 것](https://rimkongs.tistory.com/212)
+
+[[Java]다음 순열(Next Permutation)](https://sskl660.tistory.com/54)
+
+와 드디어 넥스트 퍼뮤테이션이 이해가 됐다
+
+123
+
+132
+
+213
+
+231
+
+얘네만 놓고 보면
+
+우리가 사전 순으로 다음에 올 순열을 찾을 때,
+
+1. 오른쪽부터 보면서 왼쪽 수<오른쪽 수인 지점을 찾는다
+    
+    1  2 < 3
+    
+2. 그리고 2를(찾은 위치의 왼쪽 수) 3과 (오른쪽 수 중 가장 작은 수)와 바꾼다.
+    
+    1  3  2
+    
+3. 바꾼 왼쪽 자리 기준(원래는 2 현재는 3) 오른쪽을 내림차순 정렬한다.
+    
+    1  3  2
+    
+
+123123 반복
+
+*반복(1)*
+
+- 오른쪽부터 보면서 왼쪽 수 < 오른쪽 수인 지점을 찾는다.
+    
+    1 < 3  2
+    
+- 그리고 1을(찾은 위치의 왼쪽 수)와 2의(1의 오른쪽 수 중 가장 작은 수) 위치를 바꾼다.
+    
+    2   3   1
+    
+- 바꾼 왼쪽 자리 기준( 원래는 1 현재는 2) 오른쪽을 내림차순 정렬한다.
+    
+    2  1   3
+    
+
+`//배열, 배열의 시작, 배열의 끝 ex (arr,0,4) => 0,1,2,3Arrays.*sort*(*last*,*N*-i,*N*);`
+
+```java
+
+```
+
+## 10973 이전 순열
+
+**문제**
+
+**풀이**
+
+**코드**
+
+**결과**
+
+**해결**
+
+## 2407 조합
+
+**문제**
+
+[2407번: 조합](https://www.acmicpc.net/problem/2407)
+
+**풀이**
+
+단순히 조합을 돌렸다.
+
+**코드**
+
+```java
+package algo_0308;
+
+import java.util.*;
+import java.io.*;
+
+public class Main_2407_이정현 {
+    static int n, m;
+    static int cnt;
+    public static void main(String[] args) throws Exception {
+        BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st = new StringTokenizer(in.readLine());
+
+        n=Integer.parseInt(st.nextToken());
+        m=Integer.parseInt(st.nextToken());
+        cnt=0;
+        //depth, start
+        comb(0,0);
+
+        System.out.println(cnt);
+    }
+
+    static void comb(int depth, int start){
+        if(depth==m){
+            cnt++;
+            return;
+        }
+
+        for(int i=start;i<n;i++){
+            comb(depth+1, i+1);
+        }
+
+    }
+
+}
+```
+
+**결과**
+
+시간초과
+
+해결: 조합의 기본공식 (`nCr`= `n!`/ `(n-r)!`* `r!`)과 BigInteger을 사용해야 해결할 수 있는 문제
+
+[백준 JAVA 2407번 조합](https://dingdingmin-back-end-developer.tistory.com/entry/백준-JAVA-2407-조합)
+
+범위가 초과되기때문에 무한한 범위가 가능한 BigInteger을 사용해야 한다.
+
+BigInteger
+
+[[Java] 큰 숫자(정수) 다루기 BigInteger 사용법 & 예제 총정리](https://coding-factory.tistory.com/604)
+
+BigInteger을 사용하려면 먼저 선언을 해 주어야 하고,
+
+선언한 이후, add, substract, multiply, divide, remainer의 메소드를 통해 각각 사칙연산이 가능하다.
+
+`Strig.valueOf() => (int, dobule, boolean) 등의 자료형을 String객체로 만든다.`
+
+![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/706c75e9-6da8-4f22-b189-3730e4cca5c4/Untitled.png)
+
+분모: n에서 n-m까지의 곱
+
+분자: m에서 1까지의 곱
+
+```java
+package algo_0308;
+
+import java.util.*;
+import java.io.*;
+import java.math.BigInteger;
+
+public class Main_2407_이정현 {
+    static int n, m;
+    static int cnt;
+    public static void main(String[] args) throws Exception {
+        BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st = new StringTokenizer(in.readLine());
+
+        n=Integer.parseInt(st.nextToken());
+        m=Integer.parseInt(st.nextToken());
+
+        BigInteger n1=BigInteger.ONE;
+        BigInteger n2=BigInteger.ONE;
+
+        //nCr = n! / (n-r)! * r!
+        for(int i=0;i<m;i++){
+            //Strig.valueOf() => (int, dobule, boolean) 등의 자료형을 String객체로 만든다.
+            n1=n1.multiply(new BigInteger(String.valueOf(n-i)));
+            n2=n2.multiply(new BigInteger(String.valueOf(i+1)));
+        }
+
+        //n1 => n에서 n-m까지의 곱 (분모)
+        //n2 => m에서 1까지의 곱   (분자)
+
+        BigInteger answer =n1.divide(n2);
+
+        System.out.println(answer);
+
+    }
+
+}
+```
+
+## 1010 다리 놓기
+
+**문제**
+
+[1010번: 다리 놓기](https://www.acmicpc.net/problem/1010)
+
+**풀이**
+
+단순 조합 공식으로 접근
+
+**코드**
+
+```java
+package algo_0308;
+
+import java.util.*;
+import java.io.*;
+
+public class Main_1010_이정현 {
+    static int N, M;
+    static int cnt;
+    static boolean[] v;
+    public static void main(String[] args) throws Exception{
+        BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st;
+
+        int T=Integer.parseInt(in.readLine());
+
+        for(int i=0;i<T;i++){
+            System.out.println(i);
+            st= new StringTokenizer(in.readLine());
+            N= Integer.parseInt(st.nextToken());
+            M= Integer.parseInt(st.nextToken());
+            v= new boolean[M];
+            cnt= 0;
+
+            perm(0);
+            System.out.println(cnt);
+        }
+
+    }
+
+    static void perm(int depth){
+        if(depth==N){
+            cnt++;
+            System.out.println("cnt++"+cnt);
+            return;
+        }
+
+        for(int i=0;i<M;i++){
+            if(!v[i]){
+                v[i]=true;
+                perm(depth+1);
+                v[i]=false;
+            }
+        }
+    }
+}
+```
+
+**결과**
+
+시간 초과
+
+**해결**
+
+DP를 사용하여 조합을 구현하는 방법이 있고, 조합 기본 공식을 바로 사용하는 방법이 있는데, 2407에서 조합 기본 공식을 사용해 봤으니까 이번에는 DP로 해결해보려고 한다.
+
+파스칼의 삼각형
+
+[[백준(Baekjoon)] 1010. 다리 놓기 (java, 동적 계획법(DP))](https://velog.io/@fantastik/55)
+
+![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/42d0a0b9-71cd-4a6a-812b-b439a24c5043/Untitled.png)
+
+![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/4ec0ea19-fb45-4df0-b392-c2cad52b0923/Untitled.png)
+
+파스칼 삼각형의 위와 같은 성질은
+
+dp[n+1][r+1] = dp[n][r] + dp[n][r+1]을 거쳐
+
+dp[n][r] = dp[n-1][r-1] + dp[n-1][r]
+
+이렇게 dp로 표현할 수 있다.
+
+따라서
+
+`증감연산자while문에서는 상관있지만 for문에서는 전위 후위 상관없음`
+
+[[백준] 1010 - 다리 놓기](https://m.blog.naver.com/PostView.naver?isHttpsRedirect=true&blogId=occidere&logNo=220876138317)
+
+[[Java] BOJ 1010번 다리 놓기](https://comgong-man.tistory.com/114)
+
+DP는 개념부터 다시 보고 문제를 풀어봐야겠다..
+
+그래서 그냥 아까 써본 BIgInteger랑 조합 공식으로 풀었다.
+
+```java
+package algo_0308;
+
+import java.util.*;
+import java.io.*;
+import java.math.BigInteger;
+
+public class Main_1010_이정현 {
+    static int M, N;
+    static int[][] dp=new int[31][31];
+    public static void main(String[] args) throws Exception{
+        BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
+
+        int T= Integer.parseInt(in.readLine());
+        for(int tc=0;tc<T;tc++) {
+            StringTokenizer st= new StringTokenizer(in.readLine()," ");
+            N=Integer.parseInt(st.nextToken());
+            M=Integer.parseInt(st.nextToken());
+
+            BigInteger n1 = BigInteger.ONE;
+            BigInteger n2 = BigInteger.ONE;
+
+            for(int i=0;i<N;i++){
+                n1=n1.multiply(new BigInteger(String.valueOf(M-i)));
+                n2=n2.multiply(new BigInteger(String.valueOf(i+1)));
+            }
+
+            BigInteger answer= n1.divide(n2);
+            System.out.println(answer);
+        }
+    }
+}
+```
