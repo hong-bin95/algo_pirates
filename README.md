@@ -15,3 +15,5 @@
 <img src="https://user-images.githubusercontent.com/105191633/223728727-364a19b5-bf48-49da-a4dc-8bddd44a74a3.png" width="150" height="150">  
 퐁퐁부인 : [monsileI](https://github.com/monsileI)  
 <img src="https://user-images.githubusercontent.com/105191633/223899413-9d82f12b-ef7a-48b5-8cab-08044eae23e2.png" width="150" height="150">  
+핑핑이 : [sairo415](htps://github.com/sairo415)  
+<img src="https://user-images.githubusercontent.com/105191633/224225737-b4cc4a22-5553-4968-bb5f-759c8a01ebb0.png" width="150" height="150">  
